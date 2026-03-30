@@ -10,10 +10,13 @@ export type Arrest = {
   notes: string;
 };
 
+const SHEET_NAME = 'nepal-watch';
+const SHEET_RANGE = `${SHEET_NAME}!A2:H1000`;
+
 export async function getArrests(): Promise<Arrest[]> {
   const sheetId = process.env.GOOGLE_SHEETS_ID;
   const apiKey = process.env.GOOGLE_SHEETS_API_KEY;
-  const range = encodeURIComponent('Sheet1!A2:H1000');
+  const range = encodeURIComponent(SHEET_RANGE);
 
   const res = await fetch(
     `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`,
