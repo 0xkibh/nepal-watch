@@ -28,7 +28,7 @@ export default function AdminPage() {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
-  async function handleExtract() {
+ async function handleExtract() {
     if (!newsUrl) return;
     setExtracting(true);
     setMessage('');
@@ -44,10 +44,12 @@ export default function AdminPage() {
       const data = await res.json();
       if (!res.ok) {
         setMessage(`Error: ${data.error}`);
+        setExtracting(false);
         return;
       }
       if (!data.is_arrest) {
         setMessage('AI did not detect an arrest in this article. Fill the form manually.');
+        setExtracting(false);
         return;
       }
       setForm({
@@ -182,10 +184,23 @@ export default function AdminPage() {
                   whiteSpace: 'nowrap',
                 }}
               >
-                {extracting ? 'Reading...' : 'Extract'}
+                {extracting ? 'Reading...' : newsUrl && message ? 'Extract again' : 'Extract'}
               </button>
             </div>
           </div>
+
+          {message && (
+            <div style={{
+              padding: '12px',
+              borderRadius: '8px',
+              fontSize: '14px',
+              background: message.includes('Error') ? '#1a0a0a' : message.includes('populated') ? '#0a0f1a' : '#0a1a0a',
+              border: `1px solid ${message.includes('Error') ? '#7f1d1d' : message.includes('populated') ? '#1e3a5f' : '#14532d'}`,
+              color: message.includes('Error') ? '#f87171' : message.includes('populated') ? '#60a5fa' : '#4ade80',
+            }}>
+              {message}
+            </div>
+          )}
 
           <div>
             <label style={labelStyle}>Full name *</label>
@@ -238,19 +253,6 @@ export default function AdminPage() {
               placeholder="Additional context..."
             />
           </div>
-
-          {message && (
-            <div style={{
-              padding: '12px',
-              borderRadius: '8px',
-              fontSize: '14px',
-              background: message.includes('Error') ? '#1a0a0a' : message.includes('populated') ? '#0a0f1a' : '#0a1a0a',
-              border: `1px solid ${message.includes('Error') ? '#7f1d1d' : message.includes('populated') ? '#1e3a5f' : '#14532d'}`,
-              color: message.includes('Error') ? '#f87171' : message.includes('populated') ? '#60a5fa' : '#4ade80',
-            }}>
-              {message}
-            </div>
-          )}
 
           <button
             onClick={handleSubmit}
