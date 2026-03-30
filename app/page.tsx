@@ -218,7 +218,7 @@ export default async function Home() {
           Nepal Watch is an independent public record. We are not affiliated with any political party.
           All data is sourced from verified news reports and official statements.
           If you have a tip or correction, contact us at{" "}
-          <a href="mailto:tips@nepalwatch.org" style={{ color: "#dc2626" }}>tips@nepalwatch.org</a>.
+          <a href="mailto:labskibi@gmail.com" style={{ color: "#dc2626" }}>labskibi@gmail.com</a>.
         </p>
       </div>
 

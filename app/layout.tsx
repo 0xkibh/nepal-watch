@@ -12,9 +12,12 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Nepal Watch",
-  description: "Watching Nepal's new government",
+export const metadata = {
+  title: 'Nepal Watch',
+  description: 'Tracking Nepal\'s new government — arrests, policies, and actions.',
+  icons: {
+    icon: '/nepal-watch.png',
+  },
 };
 
 export default function RootLayout({

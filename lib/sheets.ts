@@ -44,5 +44,6 @@ export async function getArrests(): Promise<Arrest[]> {
       status: (row[5] as Arrest['status']) || 'Detained',
       source: row[6] || '',
       notes: row[7] || '',
-    }));
+    }))
+    .sort((a: Arrest, b: Arrest) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
