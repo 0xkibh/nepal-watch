@@ -69,6 +69,20 @@ export default function AdminPage() {
     setExtracting(false);
   }
 
+  async function handleLogin() {
+    const res = await fetch('/api/auth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password }),
+    });
+    if (res.ok) {
+      setAuthed(true);
+      setMessage('');
+    } else {
+      setMessage('Wrong password. Try again.');
+    }
+  }
+
   async function handleSubmit() {
     setLoading(true);
     setMessage('');
@@ -126,15 +140,28 @@ export default function AdminPage() {
             style={{ ...inputStyle, marginBottom: '1rem' }}
             value={password}
             onChange={e => setPassword(e.target.value)}
-            onKeyDown={e => e.key === 'Enter' && setAuthed(true)}
+            onKeyDown={e => e.key === 'Enter' && handleLogin()}
             placeholder="Enter admin password"
           />
           <button
-            onClick={() => setAuthed(true)}
+            onClick={handleLogin}
             style={{ width: '100%', background: '#dc2626', border: 'none', borderRadius: '8px', padding: '10px', color: '#fff', fontSize: '14px', fontWeight: 600, cursor: 'pointer' }}
           >
             Enter
           </button>
+          {message && (
+            <div style={{
+              marginTop: '1rem',
+              padding: '10px 12px',
+              borderRadius: '8px',
+              fontSize: '13px',
+              background: '#1a0a0a',
+              border: '1px solid #7f1d1d',
+              color: '#f87171',
+            }}>
+              {message}
+            </div>
+          )}
         </div>
       </div>
     );
